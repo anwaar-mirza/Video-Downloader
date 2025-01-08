@@ -4,12 +4,15 @@ import os
 import shutil
 
 def download_instagram_reel(url):
-    ydl_opts = {
+   ydl_opts = {
     "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",  # Prefer mp4 format
-    "outtmpl": "downloads/%(title)s.%(ext)s",
+    "outtmpl": "downloads/%(title)s.%(ext)s",  # Set output template
     "postprocessors": [
         {
-            "key": "FFmpegVideoConvertor",
+            "key": "FFmpegMerger",  # Merge audio and video streams into a single file
+        },
+        {
+            "key": "FFmpegVideoConvertor",  # Ensure the final file is in mp4 format
             "preferedformat": "mp4",
         }
     ],
