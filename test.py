@@ -18,7 +18,7 @@ def download_instagram_reel(url):
         
         # Get the downloaded video file path
         downloaded_files = os.listdir(tmpdirname)
-        video_file = [f for f in downloaded_files if f.endswith(('.mp4', '.mkv', '.avi'))]
+        video_files = [f for f in downloaded_files if f.endswith(('.mp4', '.mkv', '.avi'))]
         if not video_files:
             raise FileNotFoundError("No video file was downloaded")
         
@@ -43,7 +43,7 @@ def download_facebook_reel(url):
         
         # Get the downloaded video file path
         downloaded_files = os.listdir(tmpdirname)
-        video_file = [f for f in downloaded_files if f.endswith(('.mp4', '.mkv', '.avi'))]
+        video_files = [f for f in downloaded_files if f.endswith(('.mp4', '.mkv', '.avi'))]
         if not video_files:
             raise FileNotFoundError("No video file was downloaded")
         
