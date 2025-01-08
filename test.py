@@ -5,12 +5,16 @@ import shutil
 
 def download_instagram_reel(url):
     ydl_opts = {
-        "format": "bestvideo+bestaudio/best",
-        "outtmpl": "downloads/%(title)s.%(ext)s",
-        "extractor_args": {
-            "Instagram": {"use_video": True}
+    "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",  # Prefer mp4 format
+    "outtmpl": "downloads/%(title)s.%(ext)s",
+    "postprocessors": [
+        {
+            "key": "FFmpegVideoConvertor",
+            "preferedformat": "mp4",
         }
-    }
+    ],
+}
+
     with YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
 
