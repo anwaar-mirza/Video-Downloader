@@ -39,7 +39,6 @@ if select == "Facebook":
         if url:
             with st.spinner("Downloading in progress..."): 
                 download_facebook_reel(url)
-            st.success("Video Downloaded Successfully!")
             # List downloaded files
             # files = os.listdir("downloads")
             # for file in files:
@@ -48,6 +47,7 @@ if select == "Facebook":
             file = os.listdir("downloads")[0]
             if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
                 st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
+            st.success("✅ Video Downloaded Successfully!")
 
 
 else:
@@ -57,11 +57,12 @@ else:
         if url:
             with st.spinner("Downloading in progress..."): 
                 download_instagram_reel(url)
-            st.success("Video Downloaded Successfully!")
+            
             # List downloaded files
             file = os.listdir("downloads")[0]
             if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
                 st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
+            st.success("✅ Video Downloaded Successfully!")
             # for file in files:
             #     if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
             #         st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
