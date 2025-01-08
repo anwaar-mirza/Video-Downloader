@@ -28,7 +28,7 @@ def download_facebook_reel(url):
 
 # Create downloads directory if it doesn't exist
 dir_name = random.randrange(500, 500001)
-os.mkdir(dirname)
+os.mkdir(dir_name)
     
 
 
