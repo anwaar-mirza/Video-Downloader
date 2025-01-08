@@ -1,6 +1,7 @@
 from yt_dlp import YoutubeDL
 import streamlit as st
 import os
+import random
 
 def download_instagram_reel(url):
     ydl_opts = {
@@ -26,8 +27,9 @@ def download_facebook_reel(url):
         ydl.download([url])
 
 # Create downloads directory if it doesn't exist
-if not os.path.exists("downloads"):
-    os.makedirs("downloads")
+dir_name = random.randrange(500, 500001)
+os.mkdir(dirname)
+    
 
 
 
@@ -48,10 +50,11 @@ if select == "Facebook":
             # for file in files:
             #     if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
             #         st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
-            file = os.listdir("downloads")[-1]
+            file = os.listdir(dir_name)[0]
             if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
-                if st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file):
+                if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
                     st.success("✅ Video Downloaded Successfully!")
+            os.rmdir(dir_name)
 
 
 else:
@@ -63,10 +66,11 @@ else:
                 download_instagram_reel(url)
             
             # List downloaded files
-            file = os.listdir("downloads")[-1]
+            file = os.listdir(dir_name)[0]
             if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
-                if st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file):
+                if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
                     st.success("✅ Video Downloaded Successfully!")
+            os.rmdir(dir_name)
             # for file in files:
             #     if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
             #         st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
