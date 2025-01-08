@@ -23,12 +23,18 @@ def download_instagram_reel(url):
 
 def download_facebook_reel(url):
     ydl_opts = {
-        "format": "bestvideo+bestaudio/best",
-        "outtmpl": "downloads/%(title)s.%(ext)s",
-        "force_generic_extractor": True,
-        "extractor_args": {
-            "Instagram": {"use_video": True}
+      "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",  # Prefer mp4 format
+      "outtmpl": "downloads/%(title)s.%(ext)s",
+      "force_generic_extractor": True,
+       "postprocessors": [
+        {
+            "key": "FFmpegMerger",  # Merge audio and video streams into a single file
+        },
+        {
+            "key": "FFmpegVideoConvertor",  # Ensure the final file is in mp4 format
+            "preferedformat": "mp4",
         }
+    ],
     }
     with YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
