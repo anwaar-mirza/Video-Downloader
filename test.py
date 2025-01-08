@@ -1,7 +1,7 @@
 from yt_dlp import YoutubeDL
 import streamlit as st
 import os
-import random
+import shutil
 
 def download_instagram_reel(url):
     ydl_opts = {
@@ -27,8 +27,9 @@ def download_facebook_reel(url):
         ydl.download([url])
 
 # Create downloads directory if it doesn't exist
-dir_name = random.randrange(500, 500001)
-os.mkdir(dir_name)
+dir_name = "downloads"
+if not os.path.exists(dir_name):
+    os.mkdir(dir_name)
     
 
 
@@ -54,7 +55,7 @@ if select == "Facebook":
             if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
                 if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
                     st.success("✅ Video Downloaded Successfully!")
-            os.rmdir(dir_name)
+            shutil.rmtree(dir_name)
 
 
 else:
@@ -70,7 +71,7 @@ else:
             if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
                 if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
                     st.success("✅ Video Downloaded Successfully!")
-            os.rmdir(dir_name)
+            shutil.rmtree(dir_name)
             # for file in files:
             #     if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
             #         st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
