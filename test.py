@@ -1,91 +1,61 @@
 from yt_dlp import YoutubeDL
 import streamlit as st
 import os
-import tempfile
 
 def download_instagram_reel(url):
-    # Create a temporary directory to store the downloaded video
-    with tempfile.TemporaryDirectory() as tmpdirname:
-        ydl_opts = {
-            "format": "bestvideo+bestaudio/best",
-            "outtmpl": f"{tmpdirname}/%(title)s.%(ext)s",
-            "extractor_args": {
-                "Instagram": {"use_video": True}
-            }
+    ydl_opts = {
+        "format": "bestvideo+bestaudio/best",
+        "outtmpl": "downloads/%(title)s.%(ext)s",
+        "extractor_args": {
+            "Instagram": {"use_video": True}
         }
-        with YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
-        
-        # Get the downloaded video file path
-        downloaded_files = os.listdir(tmpdirname)
-        video_files = [f for f in downloaded_files if f.endswith(('.mp4', '.mkv', '.avi'))]
-        if not video_files:
-            raise FileNotFoundError("No video file was downloaded")
-        
-        video_file = video_files[0]  # Assuming the first video is the correct one
-        video_path = os.path.join(tmpdirname, video_file)
-        
-        return video_path
+    }
+    with YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
 
 def download_facebook_reel(url):
-    # Create a temporary directory to store the downloaded video
-    with tempfile.TemporaryDirectory() as tmpdirname:
-        ydl_opts = {
-            "format": "bestvideo+bestaudio/best",
-            "outtmpl": f"{tmpdirname}/%(title)s.%(ext)s",
-            "force_generic_extractor": True,
-            "extractor_args": {
-                "Facebook": {"use_video": True}
-            }
+    ydl_opts = {
+        "format": "bestvideo+bestaudio/best",
+        "outtmpl": "downloads/%(title)s.%(ext)s",
+        "force_generic_extractor": True,
+        "extractor_args": {
+            "Instagram": {"use_video": True}
         }
-        with YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
-        
-        # Get the downloaded video file path
-        downloaded_files = os.listdir(tmpdirname)
-        video_files = [f for f in downloaded_files if f.endswith(('.mp4', '.mkv', '.avi'))]
-        if not video_files:
-            raise FileNotFoundError("No video file was downloaded")
-        
-        video_file = video_files[0]  # Assuming the first video is the correct one
-        video_path = os.path.join(tmpdirname, video_file)
-        
-        return video_path
+    }
+    with YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
 
+# Create downloads directory if it doesn't exist
+if not os.path.exists("downloads"):
+    os.makedirs("downloads")
 
 select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
+url = st.text_input(f"Enter {select} URL")
 
 if select == "Facebook":
-    url = st.text_input(f"Enter {select} URL")
     if "facebook" not in url and url != "":
         st.error("It's not a Facebook URL")
     else:
-        if url != "" and st.button("Download"):
-            with st.spinner("Downloading in progress..."):
-                video_path = download_facebook_reel(url)
-                with open(video_path, "rb") as video_file:
-                    st.download_button(
-                        label="Download Video",
-                        data=video_file,
-                        file_name=os.path.basename(video_path),
-                        mime="video/mp4"
-                    )
-            st.write("Successfully Download")
+        if url and st.button("Download"):
+            with st.spinner("Downloading in progress..."): 
+                download_facebook_reel(url)
+            st.success("Video Downloaded Successfully!")
+            # List downloaded files
+            files = os.listdir("downloads")
+            for file in files:
+                if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
+                    st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
 
 else:
-    url = st.text_input(f"Enter {select} URL")
     if select.lower() not in url and url != "":
         st.error(f"It's not a {select} URL")
     else:
-        if url is not None and st.button("Download"):
-            with st.spinner("Downloading in progress..."):
-                video_path = download_instagram_reel(url)
-                with open(video_path, "rb") as video_file:
-                    st.download_button(
-                        label="Download Video",
-                        data=video_file,
-                        file_name=os.path.basename(video_path),
-                        mime="video/mp4"
-                    )
-            st.write("Successfully Download")
-
+        if url and st.button("Download"):
+            with st.spinner("Downloading in progress..."): 
+                download_instagram_reel(url)
+            st.success("Video Downloaded Successfully!")
+            # List downloaded files
+            files = os.listdir("downloads")
+            for file in files:
+                if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
+                    st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
