@@ -36,7 +36,7 @@ if select == "Facebook":
     if "facebook" not in url and url != "":
         st.error("It's not a Facebook URL")
     else:
-        if url and st.button("Download"):
+        if url:
             with st.spinner("Downloading in progress..."): 
                 download_facebook_reel(url)
             st.success("Video Downloaded Successfully!")
@@ -50,7 +50,7 @@ else:
     if select.lower() not in url and url != "":
         st.error(f"It's not a {select} URL")
     else:
-        if url and st.button("Download"):
+        if url:
             with st.spinner("Downloading in progress..."): 
                 download_instagram_reel(url)
             st.success("Video Downloaded Successfully!")
