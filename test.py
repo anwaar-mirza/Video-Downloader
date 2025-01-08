@@ -46,8 +46,8 @@ if select == "Facebook":
             #         st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
             file = os.listdir("downloads")[0]
             if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
-                st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
-            st.success("✅ Video Downloaded Successfully!")
+                if st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file):
+                    st.success("✅ Video Downloaded Successfully!")
 
 
 else:
@@ -61,8 +61,8 @@ else:
             # List downloaded files
             file = os.listdir("downloads")[0]
             if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
-                st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
-            st.success("✅ Video Downloaded Successfully!")
+                if st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file):
+                    st.success("✅ Video Downloaded Successfully!")
             # for file in files:
             #     if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
             #         st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
