@@ -52,21 +52,17 @@ if select == "Facebook":
     if "facebook" not in url and url != "":
         st.error("It's not a Facebook URL")
     else:
-        if url is not None and st.button("Download"):
+        if url != "" and st.button("Download"):
             with st.spinner("Downloading in progress..."):
                 video_path = download_facebook_reel(url)
-            
-            # Provide the video for download
-            st.success("Video downloaded successfully!")
-            with open(video_path, "rb") as video_file:
-                st.download_button(
-                    label="Download Video",
-                    data=video_file,
-                    file_name=os.path.basename(video_path),
-                    mime="video/mp4"
-                )
-        else:
-            st.warning("Please enter a valid URL")
+                with open(video_path, "rb") as video_file:
+                    st.download_button(
+                        label="Download Video",
+                        data=video_file,
+                        file_name=os.path.basename(video_path),
+                        mime="video/mp4"
+                    )
+            st.write("Successfully Download")
 
 else:
     url = st.text_input(f"Enter {select} URL")
@@ -76,15 +72,12 @@ else:
         if url is not None and st.button("Download"):
             with st.spinner("Downloading in progress..."):
                 video_path = download_instagram_reel(url)
-            
-            # Provide the video for download
-            st.success("Video downloaded successfully!")
-            with open(video_path, "rb") as video_file:
-                st.download_button(
-                    label="Download Video",
-                    data=video_file,
-                    file_name=os.path.basename(video_path),
-                    mime="video/mp4"
-                )
-        else:
-            st.warning("Please enter a valid URL")
+                with open(video_path, "rb") as video_file:
+                    st.download_button(
+                        label="Download Video",
+                        data=video_file,
+                        file_name=os.path.basename(video_path),
+                        mime="video/mp4"
+                    )
+            st.write("Successfully Download")
+
