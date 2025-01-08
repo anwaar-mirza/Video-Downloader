@@ -1,8 +1,7 @@
 import os
-from pathlib import Path
+import tempfile
 from yt_dlp import YoutubeDL
 import streamlit as st
-import tempfile
 
 # Function to download Instagram reels
 def download_instagram_reel(url):
@@ -18,10 +17,15 @@ def download_instagram_reel(url):
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
 
-        # Return the path to the downloaded file
-        for file_name in os.listdir(temp_dir):
+        # List the files in the temporary directory to verify if the download was successful
+        downloaded_files = os.listdir(temp_dir)
+        st.write("Files in temp directory:", downloaded_files)  # Debugging line
+
+        # Find the video file in the temporary directory
+        for file_name in downloaded_files:
             if file_name.endswith(".mp4"):  # Check if the file is a video
                 return os.path.join(temp_dir, file_name)
+        return None  # Return None if no video file is found
 
 # Function to download Facebook reels
 def download_facebook_reel(url):
@@ -38,10 +42,15 @@ def download_facebook_reel(url):
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
 
-        # Return the path to the downloaded file
-        for file_name in os.listdir(temp_dir):
+        # List the files in the temporary directory to verify if the download was successful
+        downloaded_files = os.listdir(temp_dir)
+        st.write("Files in temp directory:", downloaded_files)  # Debugging line
+
+        # Find the video file in the temporary directory
+        for file_name in downloaded_files:
             if file_name.endswith(".mp4"):  # Check if the file is a video
                 return os.path.join(temp_dir, file_name)
+        return None  # Return None if no video file is found
 
 # Streamlit app
 select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
@@ -54,11 +63,12 @@ if select == "Facebook":
         if url and st.button("Download"):
             with st.spinner("Downloading in progress..."):
                 video_path = download_facebook_reel(url)
-            st.write("Video Downloaded Successfully.")
-            
-            # Provide the video file for download
-            with open(video_path, "rb") as f:
-                st.download_button("Download Video", data=f, file_name="facebook_video.mp4", mime="video/mp4")
+            if video_path:
+                st.write("Video Downloaded Successfully.")
+                with open(video_path, "rb") as f:
+                    st.download_button("Download Video", data=f, file_name="facebook_video.mp4", mime="video/mp4")
+            else:
+                st.error("Video download failed.")
 else:
     if select.lower() not in url and url != "":
         st.error(f"It's not a {select} URL")
@@ -66,8 +76,9 @@ else:
         if url and st.button("Download"):
             with st.spinner("Downloading in progress..."):
                 video_path = download_instagram_reel(url)
-            st.write("Video Downloaded Successfully.")
-            
-            # Provide the video file for download
-            with open(video_path, "rb") as f:
-                st.download_button("Download Video", data=f, file_name="instagram_video.mp4", mime="video/mp4")
+            if video_path:
+                st.write("Video Downloaded Successfully.")
+                with open(video_path, "rb") as f:
+                    st.download_button("Download Video", data=f, file_name="instagram_video.mp4", mime="video/mp4")
+            else:
+                st.error("Video download failed.")
