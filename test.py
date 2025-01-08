@@ -41,10 +41,14 @@ if select == "Facebook":
                 download_facebook_reel(url)
             st.success("Video Downloaded Successfully!")
             # List downloaded files
-            files = os.listdir("downloads")
-            for file in files:
-                if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
-                    st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
+            # files = os.listdir("downloads")
+            # for file in files:
+            #     if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
+            #         st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
+            file = os.listdir("downloads")[0]
+            if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
+                st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
+
 
 else:
     if select.lower() not in url and url != "":
@@ -55,7 +59,9 @@ else:
                 download_instagram_reel(url)
             st.success("Video Downloaded Successfully!")
             # List downloaded files
-            files = os.listdir("downloads")
-            for file in files:
-                if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
-                    st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
+            file = os.listdir("downloads")[0]
+            if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
+                st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
+            # for file in files:
+            #     if file.endswith(('.mp4', '.mkv', '.webm')):  # Check for video files
+            #         st.download_button(label=f"Download {file}", data=open(f"downloads/{file}", "rb"), file_name=file)
