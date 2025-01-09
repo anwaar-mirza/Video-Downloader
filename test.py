@@ -44,7 +44,7 @@ dir_name = "downloads"
 if not os.path.exists(dir_name):
     os.mkdir(dir_name)
     
-st.image("insta.png", width=20)
+st.image("insta.png", width=100)
 st.title("Downloading Escape")
 st.header("Your One-Stop Solution for Seamless Video Downloads!")
 st.divider()
