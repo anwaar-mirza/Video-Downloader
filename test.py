@@ -44,12 +44,8 @@ dir_name = "downloads"
 if not os.path.exists(dir_name):
     os.mkdir(dir_name)
     
-st.markdown("""
-<div style="display: flex; align-items: center; justify-content: space-between; padding-bottom:30px;">
-    <img src="data:image/png;base64,{}" width="100" height="100" style="margin-left: 10px; margin-top:25px">
-    <h1 style="text-align: center; margin-right:95px;">Downloading Escape</h1>
-</div>
-""".format(base64.b64encode(open("insta.png", "rb").read()).decode()), unsafe_allow_html=True)
+st.image("insta.png", width=100, caption="Downloading Escape", use_column_width=True)
+st.title("Downloading Escape")
 st.header("Your One-Stop Solution for Seamless Video Downloads!")
 st.divider()
 select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
