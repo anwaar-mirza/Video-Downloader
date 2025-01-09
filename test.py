@@ -53,7 +53,7 @@ st.markdown("""
 st.header("Your One-Stop Solution for Seamless Video Downloads!")
 st.divider()
 select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
-url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
+#url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
 try:
     if select == "Facebook":
         if "facebook" not in url and url != "":
