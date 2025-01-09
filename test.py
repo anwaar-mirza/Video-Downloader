@@ -44,6 +44,14 @@ dir_name = "downloads"
 if not os.path.exists(dir_name):
     os.mkdir(dir_name)
     
+
+st.set_page_config(
+    page_title="Responsive App",
+    page_icon="🌍",
+    layout="wide",
+    initial_sidebar_state="auto",
+)
+
 st.title("Downloading Escape")
 st.header("Your One-Stop Solution for Seamless Video Downloads!")
 st.divider()
