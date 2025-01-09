@@ -2,6 +2,7 @@ from yt_dlp import YoutubeDL
 import streamlit as st
 import os
 import shutil
+import base64
 
 def download_instagram_reel(url):
    ydl_opts = {
