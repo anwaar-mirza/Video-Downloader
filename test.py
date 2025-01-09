@@ -6,18 +6,11 @@ import shutil
 # Function to download Instagram reels
 def download_instagram_reel(url):
     ydl_opts = {
-        "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
-        "outtmpl": "downloads/%(title)s.%(ext)s",
-        "postprocessors": [
-            {
-                "key": "FFmpegMerger",
-            },
-            {
-                "key": "FFmpegVideoConvertor",
-                "preferedformat": "mp4",
-            }
-        ],
-        "quiet": True,  # Suppress output
+    "format": "bestvideo+bestaudio/best",
+    "postprocessors": [{
+        "key": "FFmpegMerger",
+    }],
+    "outtmpl": "downloads/%(title)s.%(ext)s",
     }
 
     with YoutubeDL(ydl_opts) as ydl:
@@ -27,20 +20,14 @@ def download_instagram_reel(url):
 # Function to download Facebook reels
 def download_facebook_reel(url):
     ydl_opts = {
-        "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
+        "format": "bestvideo+bestaudio/best",
+        "postprocessors": [{
+            "key": "FFmpegMerger",
+        }],
         "outtmpl": "downloads/%(title)s.%(ext)s",
+        }
         "force_generic_extractor": True,
-        "postprocessors": [
-            {
-                "key": "FFmpegMerger",
-            },
-            {
-                "key": "FFmpegVideoConvertor",
-                "preferedformat": "mp4",
-            }
-        ],
-        "quiet": True,  # Suppress output
-    }
+        
 
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=True)
