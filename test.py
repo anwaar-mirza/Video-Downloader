@@ -87,6 +87,8 @@ try:
             if url:
                 with st.spinner("Downloading in progress..."): 
                     file_path = download_instagram_reel(url)
+
+                st.write(os.listdir(dir_name))
                 if os.path.exists(file_path):
                     file_name = os.path.basename(file_path)
                     if st.download_button(label=f"Download {file_name}", data=open(file_path, "rb"), file_name=file_name):
