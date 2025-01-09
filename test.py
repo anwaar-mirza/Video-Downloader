@@ -50,7 +50,7 @@ if not os.path.exists(dir_name):
 # Streamlit configuration
 st.set_page_config(
     page_title="Downloading Escape",
-    page_icon="\ud83d\udc45",
+    page_icon="📥",
     layout="wide",
     initial_sidebar_state="auto",
 )
