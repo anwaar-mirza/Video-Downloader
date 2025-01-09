@@ -72,13 +72,13 @@ try:
         else:
             if url:
                 with st.spinner("Downloading in progress..."): 
-                    file_path = download_facebook_reel(url)
-                if os.path.exists(file_path):
-                    file_name = os.path.basename(file_path)
-                    if st.download_button(label=f"Download {file_name}", data=open(file_path, "rb"), file_name=file_name):
+                    download_facebook_reel(url)
+                file = os.listdir(dir_name)[0]
+                if file.endswith(('.mp4', '.mkv', '.webm')):
+                    if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
                         st.success("✅ Video Downloaded Successfully!")
-                else:
-                    st.error("Download failed. Please try again.")
+                shutil.rmtree(dir_name)
+
 
     else:
         if select.lower() not in url and url != "":
@@ -86,13 +86,14 @@ try:
         else:
             if url:
                 with st.spinner("Downloading in progress..."): 
-                    file_path = download_instagram_reel(url)
-                if os.path.exists(file_path):
-                    file_name = os.path.basename(file_path)
-                    if st.download_button(label=f"Download {file_name}", data=open(file_path, "rb"), file_name=file_name):
+                    download_instagram_reel(url)
+
+                file = os.listdir(dir_name)[0]
+                if file.endswith(('.mp4', '.mkv', '.webm')):
+                    if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
                         st.success("✅ Video Downloaded Successfully!")
-                else:
-                    st.error("Download failed. Please try again.")
+                shutil.rmtree(dir_name)
+
 
 except Exception as e:
     st.error(e)
