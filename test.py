@@ -60,7 +60,7 @@ st.divider()
 with st.form("url_form"):
    select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
    url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
-   st.form_submit_button("Download Now")
+   submit = st.form_submit_button("Download Now")
 
 if submit:
    try:
