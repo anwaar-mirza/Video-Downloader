@@ -18,8 +18,8 @@ def download_instagram_reel(url):
     ],
 }
 
-    with YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+   with YoutubeDL(ydl_opts) as ydl:
+      ydl.download([url])
 
 def download_facebook_reel(url):
     ydl_opts = {
