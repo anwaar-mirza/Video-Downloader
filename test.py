@@ -52,41 +52,47 @@ st.set_page_config(
     initial_sidebar_state="auto",
 )
 
+
+
 st.title("Downloading Escape")
-st.write("Your One-Stop Solution for Seamless Video Downloads!")
+st.header("Your One-Stop Solution for Seamless Video Downloads!")
 st.divider()
-select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
-url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
-try:
-    if select == "Facebook":
-        if "facebook" not in url and url != "":
-            st.error("It's not a Facebook URL")
-        else:
-            if url:
-                with st.spinner("Downloading in progress..."): 
-                    download_facebook_reel(url)
-                file = os.listdir(dir_name)[0]
-                if file.endswith(('.mp4', '.mkv', '.webm')):
-                    if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
-                        st.success("✅ Video Downloaded Successfully!")
-                shutil.rmtree(dir_name)
+with st.form("url_form"):
+   select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
+   url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
+   st.form_submit_button("Download Now")
+
+if submit:
+   try:
+       if select == "Facebook":
+           if "facebook" not in url and url != "":
+               st.error("It's not a Facebook URL")
+           else:
+               if url:
+                   with st.spinner("Downloading in progress..."): 
+                       download_facebook_reel(url)
+                   file = os.listdir(dir_name)[0]
+                   if file.endswith(('.mp4', '.mkv', '.webm')):
+                       if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
+                           st.success("✅ Video Downloaded Successfully!")
+                   shutil.rmtree(dir_name)
 
 
-    else:
-        if select.lower() not in url and url != "":
-            st.error(f"It's not a {select} URL")
-        else:
-            if url:
-                with st.spinner("Downloading in progress..."): 
-                    download_instagram_reel(url)
+       else:
+           if select.lower() not in url and url != "":
+               st.error(f"It's not a {select} URL")
+           else:
+               if url:
+                   with st.spinner("Downloading in progress..."): 
+                       download_instagram_reel(url)
 
-                file = os.listdir(dir_name)[0]
-                if file.endswith(('.mp4', '.mkv', '.webm')):
-                    if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
-                        st.success("✅ Video Downloaded Successfully!")
-                shutil.rmtree(dir_name)
-except:
-    st.error("OOPS! Enter a valid URL....")
+                   file = os.listdir(dir_name)[0]
+                   if file.endswith(('.mp4', '.mkv', '.webm')):
+                       if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
+                           st.success("✅ Video Downloaded Successfully!")
+                   shutil.rmtree(dir_name)
+   except:
+       st.error("OOPS! Enter a valid URL....")
 
 
 
