@@ -47,13 +47,13 @@ if not os.path.exists(dir_name):
 
 st.set_page_config(
     page_title="Downloading Escape",
-    page_icon="insta.png",
+    page_icon="📥",
     layout="wide",
     initial_sidebar_state="auto",
 )
 
 st.title("Downloading Escape")
-st.header("Your One-Stop Solution for Seamless Video Downloads!")
+st.write("Your One-Stop Solution for Seamless Video Downloads!")
 st.divider()
 select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
 url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
