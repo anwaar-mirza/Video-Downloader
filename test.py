@@ -46,8 +46,8 @@ if not os.path.exists(dir_name):
     
 
 st.set_page_config(
-    page_title="Responsive App",
-    page_icon="🌍",
+    page_title="Downloading Escape",
+    page_icon=st.image("insta.png"),
     layout="wide",
     initial_sidebar_state="auto",
 )
