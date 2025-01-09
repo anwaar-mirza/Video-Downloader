@@ -43,8 +43,10 @@ def download_facebook_reel(url):
         ydl.download([url])
 
 # Ensure the downloads directory exists
-dir_name = "anwaar"
-if not os.path.exists(dir_name):
+dir_name = "downloads"
+if os.path.exists(dir_name):
+    pass
+else:
     os.mkdir(dir_name)
 
 # Streamlit configuration
@@ -87,7 +89,7 @@ try:
                 with st.spinner("Downloading in progress..."): 
                     download_instagram_reel(url)
 
-                file = os.listdir(dir_name)[0]
+                file = os.listdir(dir_name)[-1]
                 if file.endswith(('.mp4', '.mkv', '.webm')):
                     if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
                         st.success("✅ Video Downloaded Successfully!")
