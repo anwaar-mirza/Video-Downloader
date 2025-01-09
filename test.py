@@ -61,39 +61,36 @@ st.header("Your One-Stop Solution for Seamless Video Downloads!")
 st.divider()
 
 
-select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
-url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
-
 try:
     if select == "Facebook":
         if "facebook" not in url and url != "":
             st.error("It's not a Facebook URL")
         else:
             if url:
-                with st.spinner("Downloading in progress..."):
+                with st.spinner("Downloading in progress..."): 
                     download_facebook_reel(url)
-
                 file = os.listdir(dir_name)[0]
-                if file.endswith((".mp4", ".mkv", ".webm")):
+                if file.endswith(('.mp4', '.mkv', '.webm')):
                     if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
                         st.success("✅ Video Downloaded Successfully!")
                 shutil.rmtree(dir_name)
+
 
     else:
         if select.lower() not in url and url != "":
             st.error(f"It's not a {select} URL")
         else:
             if url:
-                with st.spinner("Downloading in progress..."):
+                with st.spinner("Downloading in progress..."): 
                     download_instagram_reel(url)
 
                 file = os.listdir(dir_name)[0]
-                if file.endswith((".mp4", ".mkv", ".webm")):
+                if file.endswith(('.mp4', '.mkv', '.webm')):
                     if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
                         st.success("✅ Video Downloaded Successfully!")
                 shutil.rmtree(dir_name)
-except Exception as e:
-    st.error(e)
+except:
     st.error("OOPS! Enter a valid URL....")
+
 
 #ok done
