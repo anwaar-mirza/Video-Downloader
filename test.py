@@ -21,12 +21,13 @@ def download_instagram_reel(url):
 def download_facebook_reel(url):
     ydl_opts = {
         "format": "bestvideo+bestaudio/best",
+        "force_generic_extractor": True,
         "postprocessors": [{
             "key": "FFmpegMerger",
         }],
         "outtmpl": "downloads/%(title)s.%(ext)s",
         }
-        "force_generic_extractor": True,
+        
         
 
     with YoutubeDL(ydl_opts) as ydl:
