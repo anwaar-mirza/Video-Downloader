@@ -43,8 +43,13 @@ dir_name = "downloads"
 if not os.path.exists(dir_name):
     os.mkdir(dir_name)
     
-st.markdown("""<h1 style='text-align:center;'>Downloading Escape</h1>""", unsafe_allow_html=True)
-st.markdown("""<p style='text-align:justify;'><strong>Downloading Escape</strong> is a user-friendly app that allows users to easily download videos from popular platforms like TikTok, YouTube, Instagram, and Facebook. By simply providing the URL of the video, users can instantly download high-quality video files for offline viewing. The app supports multiple platforms, making it a versatile tool for video download needs. Whether you're saving a TikTok reel, a YouTube video, or an Instagram or Facebook post, <strong>Downloading Escape</strong> provides a seamless, fast, and efficient way to grab your favorite videos.</p>""", unsafe_allow_html=True)
+st.markdown("""
+<div style="display: flex; align-items: center; justify-content: space-between; padding-bottom:30px;">
+    <img src="data:image/png;base64,{}" width="100" height="100" style="margin-left: 10px; margin-top:25px">
+    <h1 style="text-align: center; margin-right:95px;">Downloading Escape</h1>
+</div>
+""".format(base64.b64encode(open("insta.png", "rb").read()).decode()), unsafe_allow_html=True)
+st.header("Your One-Stop Solution for Seamless Video Downloads!")
 st.divider()
 select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
 url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
