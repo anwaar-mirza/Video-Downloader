@@ -47,7 +47,7 @@ if not os.path.exists(dir_name):
 
 st.set_page_config(
     page_title="Downloading Escape",
-    page_icon=st.image("insta.png"),
+    page_icon="insta.png",
     layout="wide",
     initial_sidebar_state="auto",
 )
