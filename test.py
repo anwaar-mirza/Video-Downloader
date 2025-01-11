@@ -46,8 +46,7 @@ if url:
         with open(video_path, "rb") as video_file:
             if st.download_button(label="Download Video", data=video_file, file_name=os.path.basename(video_path), mime="video/mp4"):
                 st.success("✅ Video Downloaded Successfully!")
-                time.sleep(3)
-            os.rmdir(video_path)
     except Exception as e:
-        st.error(f"Error: {str(e)}")
-        st.error("OOPS! Please check the URL and try again.")
+        # st.error(f"Error: {str(e)}")
+        # st.error("OOPS! Please check the URL and try again.")
+        pass
