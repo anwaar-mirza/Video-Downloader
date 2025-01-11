@@ -19,8 +19,6 @@ def download_instagram_reel(url, output_path='downloads/'):
         return ydl.prepare_filename(info)
        
 
-if not os.path.exists(dir_name):
-    os.mkdir(dir_name)
     
 st.markdown("""<h1 style='text-align:center;'>Downloading Escape</h1>""", unsafe_allow_html=True)
 st.markdown("""<p style='text-align:justify;'><strong>Downloading Escape</strong> is a user-friendly app that allows users to easily download videos from popular platforms like TikTok, YouTube, Instagram, and Facebook. By simply providing the URL of the video, users can instantly download high-quality video files for offline viewing. The app supports multiple platforms, making it a versatile tool for video download needs. Whether you're saving a TikTok reel, a YouTube video, or an Instagram or Facebook post, <strong>Downloading Escape</strong> provides a seamless, fast, and efficient way to grab your favorite videos.</p>""", unsafe_allow_html=True)
