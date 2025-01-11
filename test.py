@@ -1,22 +1,15 @@
 from yt_dlp import YoutubeDL
 import streamlit as st
 import os
+import time
 
 def download_video(url, output_path='downloads/'):
-    """
-    Downloads a video from the given URL using yt-dlp.
-    
-    :param url: The video URL.
-    :param output_path: The folder where the downloaded file will be saved.
-    :return: The full path of the downloaded video.
-    """
     ydl_opts = {
-        'outtmpl': f'{output_path}%(title)s.%(ext)s',  # Save as "<output_path>/<title>.<ext>"
-        'format': 'best',  # Download the best quality video
-        'quiet': True,     # Suppress console logs
+        'outtmpl': f'{output_path}%(title)s.%(ext)s',
+        'format': 'best',
+        'quiet': True,
     }
 
-    # Ensure the output path exists
     os.makedirs(output_path, exist_ok=True)
 
     with YoutubeDL(ydl_opts) as ydl:
@@ -38,7 +31,6 @@ st.divider()
 platforms = ["Facebook", "Instagram", "Tiktok", "Youtube"]
 selected_platform = st.radio("Select Platform", platforms)
 
-# URL input
 url = st.text_input(
     f"Enter {selected_platform} URL",
     placeholder=f"Paste {selected_platform} URL Here..."
@@ -52,13 +44,10 @@ if url:
 
         # Provide a download button
         with open(video_path, "rb") as video_file:
-            st.download_button(
-                label="Download Video",
-                data=video_file,
-                file_name=os.path.basename(video_path),
-                mime="video/mp4",
-            )
-        st.success("✅ Video Downloaded Successfully!")
+            if st.download_button(label="Download Video", data=video_file, file_name=os.path.basename(video_path), mime="video/mp4"):
+                st.success("✅ Video Downloaded Successfully!")
+                time.sleep(3)
+            os.rmdir(video_path)
     except Exception as e:
         st.error(f"Error: {str(e)}")
         st.error("OOPS! Please check the URL and try again.")
