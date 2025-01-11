@@ -37,5 +37,6 @@ try:
                 if st.download_button(label=f"Download {info}", data=open(f"{info}", "rb"), file_name={info}):
                     st.success("✅ Video Downloaded Successfully!")
             # shutil.rmtree(dir_name)
-except:
+except Exception as e:
+    st.error(e)
     st.error("OOPS! Enter a valid URL....")
