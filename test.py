@@ -17,14 +17,16 @@ def download_video(url, output_path='downloads/'):
         return ydl.prepare_filename(info)
 
 # Streamlit App
-st.markdown(
-    """<h1 style='text-align:center;'>Downloading Escape</h1>""",
-    unsafe_allow_html=True,
+
+st.set_page_config(
+    page_title="Downloading Escape",
+    page_icon="📥",
+    layout="centered",
+    initial_sidebar_state="collapsed"
 )
-st.markdown(
-    """<p style='text-align:justify;'><strong>Downloading Escape</strong> is a user-friendly app that allows users to easily download videos from popular platforms like TikTok, YouTube, Instagram, and Facebook. By simply providing the URL of the video, users can instantly download high-quality video files for offline viewing.</p>""",
-    unsafe_allow_html=True,
-)
+
+st.title("Downloading Escape")
+st.header("One-Stop Solution for Seamless Video Downloads!")
 st.divider()
 
 # Platform selection
