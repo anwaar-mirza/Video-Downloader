@@ -1,86 +1,43 @@
 from yt_dlp import YoutubeDL
 import streamlit as st
 import os
+import shutil
 
-# Function to download Instagram reels
-def download_instagram_reel(url):
+def download_instagram_reel(url, output_path='downloads/'):
     ydl_opts = {
-        "format": "bestvideo+bestaudio/best",
-        "postprocessors": [{
-            "key": "FFmpegMerger",
+        'outtmpl': f'{output_path}%(title)s.%(ext)s',  # Save as "downloads/<title>.<ext>"
+        'format': 'best',  # Download the best quality video
+        'quiet': False,    # Show progress
+        'postprocessors': [{
+            'key': 'FFmpegVideoConvertor',  # Ensure compatibility with ffmpeg
+            'preferedformat': 'mp4',       # Convert to MP4 if not already
         }],
-        "outtmpl": "downloads/%(title)s.%(ext)s",
     }
 
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=True)
-        return ydl.prepare_filename(info)  # Return the path of the downloaded file
+        return ydl.prepare_filename(info)
+       
 
-# Function to download Facebook reels
-def download_facebook_reel(url):
-    ydl_opts = {
-        "format": "bestvideo+bestaudio/best",
-        "force_generic_extractor": True,
-        "postprocessors": [{
-            "key": "FFmpegMerger",
-        }],
-        "outtmpl": "downloads/%(title)s.%(ext)s",
-    }
-
-    with YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, download=True)
-        return ydl.prepare_filename(info)  # Return the path of the downloaded file
-
-# Ensure the downloads directory exists
-dir_name = "downloads"
-os.makedirs(dir_name, exist_ok=True)
-
-# Streamlit configuration
-st.set_page_config(
-    page_title="Downloading Escape",
-    page_icon="📥",
-    layout="wide",
-    initial_sidebar_state="auto",
-)
-
-# Streamlit UI setup
-st.title("Downloading Escape")
-st.header("Your One-Stop Solution for Seamless Video Downloads!")
+if not os.path.exists(dir_name):
+    os.mkdir(dir_name)
+    
+st.markdown("""<h1 style='text-align:center;'>Downloading Escape</h1>""", unsafe_allow_html=True)
+st.markdown("""<p style='text-align:justify;'><strong>Downloading Escape</strong> is a user-friendly app that allows users to easily download videos from popular platforms like TikTok, YouTube, Instagram, and Facebook. By simply providing the URL of the video, users can instantly download high-quality video files for offline viewing. The app supports multiple platforms, making it a versatile tool for video download needs. Whether you're saving a TikTok reel, a YouTube video, or an Instagram or Facebook post, <strong>Downloading Escape</strong> provides a seamless, fast, and efficient way to grab your favorite videos.</p>""", unsafe_allow_html=True)
 st.divider()
-
 select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
 url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
-
 try:
-    if url:
-        if select == "Facebook" and "facebook" not in url:
-            st.error("It's not a Facebook URL")
-        elif select != "Facebook" and select.lower() not in url:
-            st.error(f"It's not a {select} URL")
-        else:
-            with st.spinner("Downloading in progress..."):
-                if select == "Facebook":
-                    downloaded_file = download_facebook_reel(url)
-                else:
-                    downloaded_file = download_instagram_reel(url)
-
-            if downloaded_file and os.path.exists(downloaded_file):
-                file_name = os.path.basename(downloaded_file)
-                with open(downloaded_file, "rb") as f:
-                    st.download_button(
-                        label=f"Download {file_name}",
-                        data=f,
-                        file_name=file_name,
-                        mime="video/mp4",
-                    )
-                st.success("✅ Video Downloaded Successfully!")
-except Exception as e:
-    st.error(e)
-    st.error("OOPS! Enter a valid URL...")
-
-# Cleanup logic
-if st.button("Clean Downloads"):
-    if os.path.exists(dir_name):
-        for file in os.listdir(dir_name):
-            os.remove(os.path.join(dir_name, file))
-        st.success("✅ Downloads folder cleaned!")
+    if select.lower() not in url and url != "":
+        st.error(f"It's not a {select} URL")
+    else:
+        if url:
+            with st.spinner("Downloading in progress..."): 
+                info = download_instagram_reel(url=url)
+            #file = os.listdir(dir_name)[0]
+            if info.endswith(('.mp4', '.mkv', '.webm')):
+                if st.download_button(label=f"Download {info}", data=open(f"{info}", "rb"), file_name={info}):
+                    st.success("✅ Video Downloaded Successfully!")
+            # shutil.rmtree(dir_name)
+except:
+    st.error("OOPS! Enter a valid URL....")
