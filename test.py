@@ -1,16 +1,15 @@
 from yt_dlp import YoutubeDL
 import streamlit as st
 import os
-import shutil
 
 # Function to download Instagram reels
 def download_instagram_reel(url):
     ydl_opts = {
-    "format": "bestvideo+bestaudio/best",
-    "postprocessors": [{
-        "key": "FFmpegMerger",
-    }],
-    "outtmpl": "downloads/%(title)s.%(ext)s",
+        "format": "bestvideo+bestaudio/best",
+        "postprocessors": [{
+            "key": "FFmpegMerger",
+        }],
+        "outtmpl": "downloads/%(title)s.%(ext)s",
     }
 
     with YoutubeDL(ydl_opts) as ydl:
@@ -26,9 +25,7 @@ def download_facebook_reel(url):
             "key": "FFmpegMerger",
         }],
         "outtmpl": "downloads/%(title)s.%(ext)s",
-        }
-        
-        
+    }
 
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=True)
@@ -50,41 +47,40 @@ st.set_page_config(
 st.title("Downloading Escape")
 st.header("Your One-Stop Solution for Seamless Video Downloads!")
 st.divider()
+
 select = st.radio("Select Platform", ["Facebook", "Instagram", "Tiktok", "Youtube"])
 url = st.text_input(f"Enter {select} URL", placeholder=f"Paste {select} URL Here...")
 
 try:
-    if select == "Facebook":
-        if "facebook" not in url and url != "":
+    if url:
+        if select == "Facebook" and "facebook" not in url:
             st.error("It's not a Facebook URL")
-        else:
-            if url:
-                with st.spinner("Downloading in progress..."): 
-                    download_facebook_reel(url)
-                file = os.listdir(dir_name)[0]
-                if file.endswith(('.mp4', '.mkv', '.webm')):
-                    if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
-                        st.success("✅ Video Downloaded Successfully!")
-                shutil.rmtree(dir_name)
-
-
-    else:
-        if select.lower() not in url and url != "":
+        elif select != "Facebook" and select.lower() not in url:
             st.error(f"It's not a {select} URL")
         else:
-            if url:
-                with st.spinner("Downloading in progress..."): 
-                    download_instagram_reel(url)
+            with st.spinner("Downloading in progress..."):
+                if select == "Facebook":
+                    downloaded_file = download_facebook_reel(url)
+                else:
+                    downloaded_file = download_instagram_reel(url)
 
-                file = os.listdir(dir_name)[0]
-                if file.endswith(('.mp4', '.mkv', '.webm')):
-                    if st.download_button(label=f"Download {file}", data=open(f"{dir_name}/{file}", "rb"), file_name=file):
-                        st.success("✅ Video Downloaded Successfully!")
-                shutil.rmtree(dir_name)
-
-
+            if downloaded_file and os.path.exists(downloaded_file):
+                file_name = os.path.basename(downloaded_file)
+                with open(downloaded_file, "rb") as f:
+                    st.download_button(
+                        label=f"Download {file_name}",
+                        data=f,
+                        file_name=file_name,
+                        mime="video/mp4",
+                    )
+                st.success("✅ Video Downloaded Successfully!")
 except Exception as e:
     st.error(e)
-    st.error("OOPS! Enter a valid URL....")
+    st.error("OOPS! Enter a valid URL...")
 
-# Clean
+# Cleanup logic
+if st.button("Clean Downloads"):
+    if os.path.exists(dir_name):
+        for file in os.listdir(dir_name):
+            os.remove(os.path.join(dir_name, file))
+        st.success("✅ Downloads folder cleaned!")
